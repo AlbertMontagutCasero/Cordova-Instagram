@@ -4,8 +4,9 @@ $(function ()
     {
         window.location.href = "login.html";
     }
-    exit();
+    goToExit();
     getAllHashtags();
+    goToMyPhotoView();
 });
 
 function isLogged()
@@ -13,7 +14,7 @@ function isLogged()
     return localStorage.getItem("id_user");
 }
 
-function exit()
+function goToExit()
 {
     $("#exit").on("click", function (e)
     {
@@ -22,6 +23,13 @@ function exit()
     });
 }
 
+function goToMyPhotoView()
+{
+    $("#my-photo").on("click", function (e)
+    {
+        window.location.href = "my-photo.html";
+    });
+}
 
 function getAllHashtags()
 {

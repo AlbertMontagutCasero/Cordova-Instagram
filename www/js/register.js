@@ -13,6 +13,7 @@ function enviarDatos()
             return;
         }
         let frm = $(this).serialize(); //coge los datos de las cajas de texto
+        console.log(frm);
         $.ajax({
             "method": "POST",
             "url"   : "https://ajaxinstaalbert.000webhostapp.com/RegistrarUsuario.php",

@@ -11,7 +11,8 @@ $(function ()
     var url = new URL(urlString);
     idHashTag = url.searchParams.get("id");
 
-    getHashtagNameBy(idHashTag);
+    var hashtag = getHashtagNameBy(idHashTag);
+    updateHashTagTitle(hashtag);
     getListAllPhotoBy(idHashTag);
     vote();
 
@@ -26,8 +27,12 @@ function getHashtagNameBy(id)
     }).done(function (info)
     {
         var message = JSON.parse(info);
-        $("#hashtag-title").html(`# ${message.data[0].hash_tag_name}`);
+        return ${message.data[0].hash_tag_name};
     });
+}
+
+function updateHashTagTitle(hashtag){
+    $("#hashtag-title").html(`#${hashtag}`);
 }
 
 function getListAllPhotoBy(hashtagId)
