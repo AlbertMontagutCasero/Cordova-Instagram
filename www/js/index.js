@@ -7,6 +7,7 @@ $(function ()
     goToExit();
     getAllHashtags();
     goToMyPhotoView();
+    goUploadPhoto();
 });
 
 function isLogged()
@@ -20,6 +21,14 @@ function goToExit()
     {
         localStorage.removeItem("id_user");
         window.location.href = "login.html";
+    });
+}
+
+function goUploadPhoto()
+{
+    $("#upload-photo").on("click", function (e)
+    {
+        window.location.href = "upload-photo.html";
     });
 }
 

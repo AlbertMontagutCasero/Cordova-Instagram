@@ -11,8 +11,12 @@ $(function ()
     var url = new URL(urlString);
     idHashTag = url.searchParams.get("id");
 
-    var hashtag = getHashtagNameBy(idHashTag);
-    updateHashTagTitle(hashtag);
+    getHashtagNameBy(idHashTag)
+        .done(function (info)
+        {
+            var message = JSON.parse(info);
+            updateHashTagTitle(message.data[0].hash_tag_name);
+        });
     getListAllPhotoBy(idHashTag);
     vote();
 
@@ -20,18 +24,45 @@ $(function ()
 
 function getHashtagNameBy(id)
 {
-    $.ajax({
+    return $.ajax({
         "method": "POST",
         "url"   : "https://ajaxinstaalbert.000webhostapp.com/GetHashtagName.php",
         "data"  : {"id": id}
-    }).done(function (info)
-    {
-        var message = JSON.parse(info);
-        return ${message.data[0].hash_tag_name};
-    });
+    })
 }
 
-function updateHashTagTitle(hashtag){
+/*function getHashtagNameBy(id)
+ {
+ $.ajax({
+ "url" : "https://ajaxinstaalbert.000webhostapp.com/GetHashtagName.php",
+ "data": {"id": id},
+ success : function (info)
+ {
+ var message = JSON.parse(info);
+ return message.data[0].hash_tag_name;
+ }});
+ }*/
+
+/* TODO remove
+ function getHashtagNameBy(id) {
+ return $.ajax({
+ "method": "POST",
+ "url": "https://ajaxinstaalbert.000webhostapp.com/GetHashtagName.php",
+ "data": {"id": id}
+ })
+ }
+
+ getHashtagNameBy(id).done(function(info) {
+ console.log(info); //info looks like {"data":[{"hash_tag_name":"concert"}]}
+ var message = JSON.parse(info);
+ console.log(message); // json in object format, so now we can access to members
+ console.log(message.data[0].hash_tag_name); // concert
+ return message.data[0].hash_tag_name; // undefined
+ });
+ */
+
+function updateHashTagTitle(hashtag)
+{
     $("#hashtag-title").html(`#${hashtag}`);
 }
 
@@ -94,11 +125,12 @@ function vote()
         $.ajax({
             "method": "POST",
             "url"   : "https://ajaxinstaalbert.000webhostapp.com/Vote.php",
-            "data"  : {"id_photo" : $idPhoto, "id_user" : $idUser, "score" : $score}
+            "data"  : {"id_photo": $idPhoto, "id_user": $idUser, "score": $score}
         }).done(function (info)
         {
             console.log(info)
-            if(info == "-1"){
+            if (info == "-1")
+            {
                 alert("Ya has votado con esa puntuacion");
                 return;
             }
