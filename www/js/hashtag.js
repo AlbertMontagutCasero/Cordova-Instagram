@@ -74,6 +74,7 @@ function getListAllPhotoBy(hashtagId)
         "data"  : {"id": hashtagId}
     }).done(function (info)
     {
+        console.log(info);
         var message = JSON.parse(info);
         console.log(message);
         var html = `<table>
@@ -88,7 +89,7 @@ function getListAllPhotoBy(hashtagId)
             html += `<tr>
                 <td><img src = "${message.data[i].photo_name}" /></td> 
                 <td>${message.data[i].hash_tag_name}</td>
-                <td>${message.data[i].total_score}</td>
+                <td>${message.data[i].total_score > 0 ? message.data[i].total_score : 0 }</td>
                 <td><button class="vote_button" value="-1" name="${message.data[i].photo_id}" >-1</button></td>
                 <td><button class="vote_button" value="0" name="${message.data[i].photo_id}">0</button></td>
                 <td><button class="vote_button" value="1" name="${message.data[i].photo_id}">1</button></td>
